@@ -1,0 +1,10 @@
+.Card {
+    width: 100%;
+    margin: 1rem;
+    background-color: green;
+    border: 2px solid;
+}
+.image {
+    width: 90%;
+    margin-top: 1rem;
+}

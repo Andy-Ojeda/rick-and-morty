@@ -1,0 +1,8 @@
+.container {
+    margin-top: 2rem;
+    width: 90%;
+    background-color: blue;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid red; 
+}

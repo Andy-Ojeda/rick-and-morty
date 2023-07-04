@@ -1,10 +1,11 @@
-import Card from './Card';
+import style from "./Cards.module.css";
+import Card from '../Card/Card';
 
 
 export default function Cards(props) {
-   console.log(props.characters[0]);
+   
    return (
-   <div>
+   <div className={style.container}>
       {/* <h3>Algo: {props.characters[0].name}</h3> */}
       {props.characters.map ((personaje) => {
          return <Card 
