@@ -1,16 +1,23 @@
-.input{
-    color: var(--text-color);
+.container {
+    display: flex;
+    justify-content: end;
+    padding-top: 30px;
+    /* background-color: pink; */
+}
+
+input{
+    color: rgb(0, 0, 0);
 
 }
 
-.input:hover{
-   color:rgb(21, 221, 21)
+input:hover{
+   color:rgb(127, 126, 126)
 }
-
-.input::placeholder{
+/* 
+input::placeholder{
     color: green
 }
 
-.input:focus{
+input:focus{
     border-color: green;
-}
+} */

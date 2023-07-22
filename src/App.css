@@ -1,4 +1,27 @@
 .App {
+   /* background-color: yellowgreen; */
+   justify-content: center;
    text-align: center;
-   background-image: url('./Assets/rickandmorty.jpg');
+}
+/* .container1 {
+   border: 3px solid rgb(13, 215, 97);
+   width: 100%;
+   background-color: #d8ef73;
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+} */
+.contRoutes {
+   /* background-image: url("./Assets/RyM.jpg"); */
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+   /* border: 5px solid rgb(11, 84, 38); */
+   /* background-color: black; */
+}
+.container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
 }

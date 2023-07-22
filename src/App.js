@@ -1,60 +1,101 @@
-import './App.css';
-import {useState} from 'react'
-import axios from 'axios'
-import Cards from './components/Cards/Cards';
-import Nav from './components/Nav/Nav';
+import "./App.css";
+import {useState, useEffect} from "react";
+import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
 
-// React.useState
+import axios from "axios";
+
+//*COMPONENTS
+import Cards from "./components/Cards/Cards.jsx";
+import Nav from "./components/Nav/Nav.jsx"; 
+import Detail from "./components/Detail/Detail.jsx";
+import About from "./components/About/About.jsx";
+import Error404 from "./components/Error/Error404.jsx";
+import Form from "./components/Form/Form";
+import Favorites from "./components/Favorites/Favorites";
 
 function App() {
+  const [character, setCharacter] = useState([]);
+  const [access, setAccess] = useState(false);
 
-const [characters, setCharacters] = useState([])
+  //*FORM
+  const {pathname} = useLocation();
+  console.log("Pathname: ", pathname);
+  const navigate = useNavigate();
 
-// fetch - axios
-/*
-FETCH -> res => res.json() 
-    + es nativo, no hay que instalar
+  //*False DB
+  const EMAIL = "tuar_a@hotmail.com";
+  const PASSWORD = "pass123"
 
-AXIOS -> res =>  res.data
-    hay que instalarlo
+  const Login = (userData) => {
+    //Simulo que voy a mi DB
+    if (userData.password === PASSWORD && userData.email === EMAIL) {
+      setAccess(true);
+      navigate('/home');
+   }  else {
+     alert("Usuario o contraseña incorrecta")
+   }
+  }
 
-*/
+  useEffect(() => {
+    !access && navigate('/');
+  }, [access]);
+  
 
-/*
-estado characters = []
-axios(1)
-characters = [{1}]
-axios(2)
-characters = [{1}, {2}]
-*/
-
-const onSearch = (id) => {
-  axios(`https://rickandmortyapi.com/api/character/${id}`)
-    .then(({ data }) => {
-      if (!characters.find((char) => char.id === data.id)) {
-        if (data.name) {
-          setCharacters((oldCharacters) => [...oldCharacters, data]);
+  const searchCharacter = (id) => {
+    axios(`https://rickandmortyapi.com/api/character/${id}`)
+      .then(({ data }) => {
+        if (!character.find((char) => char.id === data.id)) {
+          if (data.name) {
+            setCharacter((oldCharacter) => [...oldCharacter, data]);
+          }
         }
-      } else {
-        window.alert(`Ya existe un personaje con el id ${id}`);
-      }
-    })
-    .catch((err) => window.alert(err));
-};
+        else {
+          window.alert(`Ya existe un personaje con el id ${id}`);
+        }
+      })
+      .catch((err) => window.alert(err));
+    
+  };
+  
+  const handleClose = (id) => {
+    setCharacter(character.filter(char => char.id !== id));
+  };
 
-const onClose = (id) => {     
-setCharacters(characters.filter(char => char.id !== id))
-}
-
-   return (
-      <div className='App'>
-         <Nav onSearch={onSearch}/>
-         <Cards characters={characters} onClose = {onClose} />
+  return(
+    <div className="container">
+      {pathname !== "/" && <Nav functionSearch= {searchCharacter}/>}
+      <div className="contRoutes">
+      <Routes>
+        <Route
+          path="/" element={<Form login={Login} />}
+        />
+        <Route
+          path="/home"
+          element={
+            <Cards characters={character} onClose={handleClose} />
+          }
+        />
+        <Route 
+          path="/about"
+          element={<About/>}
+        />
+        <Route 
+          path="/detail/:id"  //* Variable que va a guardar lo que sea que esté despues de "detail/" 
+          element={<Detail/>} //* se guarda en useParams.
+        />
+        <Route 
+          path="/favorites"
+          element={<Favorites/>}
+        />
+        <Route 
+          path="*"   
+          element={<Error404/>} 
+        />
+      </Routes>
       </div>
-   );
-}
+   
+    </div>
+  );
 
+};
 export default App;
-
-
-// rfce

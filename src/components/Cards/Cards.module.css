@@ -1,5 +1,27 @@
-.cardsConteiner{
+/* .cardsConteiner{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
  
+} */
+
+/* .grid {
+    width: 90%;
+    border: 4px solid red;
+    display: grid;
+    grid-template-columns: 30rem 30rem;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+} */
+
+.container {
+    margin-top: 2rem;
+    margin-left: 0.5rem;
+    border-radius: 20px;
+    width:27rem;
+    background-color: rgba(17, 159, 64, 0.331);
+    display: flex;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    /* border: 2px solid red;  */
 }
