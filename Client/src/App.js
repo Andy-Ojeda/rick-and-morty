@@ -26,15 +26,27 @@ function App() {
   const EMAIL = "tuar_a@hotmail.com";
   const PASSWORD = "pass123"
 
-  const Login = (userData) => {
-    //Simulo que voy a mi DB
-    if (userData.password === PASSWORD && userData.email === EMAIL) {
-      setAccess(true);
-      navigate('/home');
-   }  else {
-     alert("Usuario o contraseña incorrecta")
-   }
-  }
+
+  const login = (userData) => {
+    const { email, password } = userData;
+    const URL = 'http://localhost:3001/rickandmorty/login/';
+    axios(`${URL}?email=${email}&password=${password}`)
+      .then(({ data }) => {
+        const { access } = data;
+        setAccess(access);
+        access && navigate('/home');
+      });
+ }  
+
+  // const Login = (userData) => {
+  //   //Simulo que voy a mi DB
+  //   if (userData.password === PASSWORD && userData.email === EMAIL) {
+  //     setAccess(true);
+  //     navigate('/home');
+  //  }  else {
+  //    alert("Usuario o contraseña incorrecta")
+  //  }
+  // }
 
   useEffect(() => {
     !access && navigate('/');
@@ -42,7 +54,8 @@ function App() {
   
 
   const searchCharacter = (id) => {
-    axios(`https://rickandmortyapi.com/api/character/${id}`)
+    // axios(`https://rickandmortyapi.com/api/character/${id}`)
+    axios(`http://localhost:3001/rickandmorty/character/${id}`)
       .then(({ data }) => {
         if (!character.find((char) => char.id === data.id)) {
           if (data.name) {
@@ -53,7 +66,7 @@ function App() {
           window.alert(`Ya existe un personaje con el id ${id}`);
         }
       })
-      .catch((err) => window.alert(err));
+      .catch((err) => alert(err.response.data));
     
   };
   
@@ -67,7 +80,7 @@ function App() {
       <div className="contRoutes">
       <Routes>
         <Route
-          path="/" element={<Form login={Login} />}
+          path="/" element={<Form login={login} />}
         />
         <Route
           path="/home"
